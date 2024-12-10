@@ -1,0 +1,157 @@
+#A Kingdom Collection mod
+#The Kingdom Collection Core library is source-available at https://github.com/Kingdom-Collection-Mods.
+#Contact: Best over Discord Reloader#6504 or via Steam.
+#Copyright Reloader - All Rights Reserved
+country_decisions = {
+	kth_form_carthage = {
+		major = yes
+		potential = {
+			normal_or_historical_nations = yes
+			was_never_end_game_tag_trigger = yes
+			NOT = { has_country_flag = kth_formed_carthage_flag }
+			NOT = { exists = KTH }
+			OR = {
+				TAG = TUN
+				TAG = NAP
+			}
+		}
+		provinces_to_highlight = {
+			OR = {
+				AND = {
+					OR = {
+						province_id = 341 #Tunis
+						province_id = 2982 
+						province_id = 126
+						province_id = 124
+						province_id = 4736
+						province_id = 125
+						province_id = 4737
+					}
+					OR = {
+						NOT = { owned_by = ROOT }
+						NOT = { is_core = ROOT }
+					}
+				}
+			}
+		}
+		allow = {			
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			is_emperor = no
+			owns_core_province = 341 # Tunis
+			owns_core_province = 124
+			owns_core_province = 126
+			owns_core_province = 2982
+			owns_core_province = 4736
+			owns_core_province = 125
+			owns_core_province = 4737
+			is_colonial_nation = no
+			total_development = 200
+		}
+		effect = {
+			341 = {
+				move_capital_effect = yes
+				change_province_name = "Carthage"
+				rename_capital = "Carthage"
+			}
+
+			change_tag = KTH
+			swap_non_generic_missions = yes
+			remove_non_electors_emperors_from_empire_effect = yes
+			if = {
+				limit = {
+					NOT = { government_rank = 2 }
+				}
+				set_government_rank = 2
+			}
+			
+			
+			tunisia_area = {
+				limit = {
+					AND = {
+						NOT = { owned_by = ROOT }
+					}
+				}
+				add_permanent_claim = KTH
+			}	
+			add_prestige = 25
+			change_primary_culture = kth_carthaginian
+			capital_scope = {
+				change_culture = kth_carthaginian
+			}
+			tunisia_area = {
+				change_culture = kth_carthaginian
+			}
+			western_sicily_area = {
+				change_culture = kth_carthaginian
+			}
+			corsica_sardinia_area = {
+				change_culture = kth_carthaginian
+			}
+			djerba_area = {
+				change_culture = kth_carthaginian
+			}
+			tripolitania_area = {
+				change_culture = kth_carthaginian
+			}
+			kabylia_area = {
+				change_culture = kth_carthaginian
+			}
+			eastern_sicily_area = {
+				change_culture = kth_carthaginian
+			}
+			add_country_modifier = {
+				name = "centralization_modifier"
+				duration = 7300
+			}
+			if = {
+				limit = {
+					religion_group = christian
+				}
+				add_country_modifier = {
+					name = "kth_christian_founders"
+					duration = -1
+				}
+			}
+			if = {
+				limit = {
+					NOT = { religion_group = christian }
+				}
+				add_country_modifier = {
+					name = "kth_muslim_founders"
+					duration = -1
+				}
+			}
+			set_country_flag = kth_formed_carthage_flag
+			
+			IF = {
+				LIMIT = {
+					was_tag = TUN
+				}
+				set_country_flag = formed_tunisia_flag
+			}
+			change_government = kth_republic
+			add_government_reform = kth_oligarchy_reform
+			if = {
+				limit = { has_custom_ideas = no }
+				country_event = { id = ideagroups.1 } #Swap Ideas
+			}
+			country_event={
+				days = 7
+				id=kth_triggered_events.1
+			}
+			
+			if = {
+				limit = {
+					NOT = { adm_tech = 10 }
+				}
+				custom_tooltip = kth_found_before_adm_requirement_tt
+				kc_found_before_adm_requirement_10_effect = yes				
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}

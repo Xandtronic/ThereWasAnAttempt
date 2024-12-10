@@ -1,0 +1,117 @@
+#A Kingdom Collection mod
+#The Kingdom Collection Core library is source-available at https://github.com/Kingdom-Collection-Mods.
+#Contact: Best over Discord Reloader#6504 or via Steam.
+#Copyright Reloader - All Rights Reserved
+
+
+country_decisions = {
+
+	#Allows you to become a republic
+	kth_carthage_republic = {
+		major = yes
+		potential = {
+			tag = KTH
+			government = monarchy
+			NOT = { has_country_flag = kth_changed_to_republic_flag }
+		}
+		allow = {
+			tag = KTH
+			OR = {
+				capital = 1750 #Alicante
+				capital = 341 #Tunis
+				IF = {
+					limit = { NOT = { has_dlc = "Wealth of Nations" } }
+					capital = 125 #Palermo
+				}
+			}
+			NOT = { religion = kc_jewish }
+			stability = 1
+			is_at_war = no
+			is_emperor = no
+			adm_power = 100
+		}
+		effect = {
+			add_stability = -1
+			change_government = republic
+			add_government_reform = oligarchy_reform
+			set_country_flag = kth_changed_to_republic_flag
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	#Allows you to move capital to genoa if doesn't have Won
+	kth_move_to_genoa = {
+		major = yes
+		potential = {
+			tag = KTH
+			NOT = { has_dlc = "Wealth of Nations" }
+			NOT = { capital = 125 }
+		}
+		provinces_to_highlight = {
+			province_id = 125 #Palermo
+		}
+		allow = {
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			is_emperor = no
+			capital = 341 # Tunis
+			owns_core_province = 125
+			adm_power = 100
+		}
+		effect = {
+			add_adm_power = -100
+			125 = {
+				move_capital_effect = yes
+			}
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+
+	#Found Cathago Nova in Spain
+	kth_carthago_nova_found = {
+		potential = {
+			tag = KTH
+			OR = {
+				has_country_flag = kth_enabled_carthago_nova
+			}
+			
+			NOT = { has_country_flag = kth_founded_carthago_nova }
+		}
+		provinces_to_highlight = {
+			province_id = 1750 #Alicante
+		}
+		allow = {
+			owns_core_province = 1750 #Alicante
+			owns_core_province = 221 #Murcia
+			adm_power = 100
+			is_free_or_tributary_trigger = yes
+			is_nomad = no
+			is_at_war = no
+			is_emperor = no
+		}
+		effect = {
+			add_adm_power = -100
+			1750 = {
+				change_province_name = "Carthago Nova"
+				rename_capital = "East Carthago Nova"
+				move_capital_effect = yes
+				add_base_tax = 1
+				add_base_production = 1
+				add_prosperity = 25
+			}
+			221 = {
+				change_province_name = "Carthago Exteriores"
+				rename_capital = "West Carthago Nova"
+			}
+			set_country_flag = kth_founded_carthago_nova
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+}
